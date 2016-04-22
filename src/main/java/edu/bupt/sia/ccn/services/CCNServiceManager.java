@@ -20,8 +20,6 @@ import java.util.List;
 public class CCNServiceManager{
     CCNServiceTable<String, CCNServiceObject> _serviceTable = new CCNServiceTable<>(5);
     OSGIContoller _serviceController = new OSGIContoller();
-    //boolean service_already_installed = false;
-    //List<Bundle> _installedBundles = new LinkedList<Bundle>();
 
     public CCNServiceManager()
             throws MalformedContentNameStringException, ConfigurationException,
@@ -49,7 +47,6 @@ public class CCNServiceManager{
         boolean default_result = false;
         if (_serviceTable.get(serviceName) != null) {
             return true;
-            //this.service_already_installed = true;
         }
         return default_result;
     }
