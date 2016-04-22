@@ -2,11 +2,13 @@ package edu.bupt.sia.ccn.services;
 
 import edu.bupt.sia.osgi.OSGIContoller;
 import org.ccnx.ccn.config.ConfigurationException;
+import org.ccnx.ccn.impl.support.Log;
 import org.ccnx.ccn.io.CCNInputStream;
 import org.ccnx.ccn.protocol.MalformedContentNameStringException;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.Version;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,6 +20,7 @@ import java.util.List;
 public class CCNServiceManager{
     CCNServiceTable<String, CCNServiceObject> _serviceTable = new CCNServiceTable<>(5);
     OSGIContoller _serviceController = new OSGIContoller();
+    //boolean service_already_installed = false;
     //List<Bundle> _installedBundles = new LinkedList<Bundle>();
 
     public CCNServiceManager()
@@ -46,13 +49,14 @@ public class CCNServiceManager{
         boolean default_result = false;
         if (_serviceTable.get(serviceName) != null) {
             return true;
+            //this.service_already_installed = true;
         }
         return default_result;
     }
 
     public boolean serviceTable_withinSize() {
         boolean default_result = false;
-        if (_serviceTable.usedSize() < 5) {
+        if (_serviceTable.usedSize() < 5) { //default max table size = 5
             return true;
         }
         return default_result;
@@ -73,7 +77,7 @@ public class CCNServiceManager{
         Version serviceVersion = bundle.getVersion();
 
         String servicePopularity = "";
-        //servicePopularity = serviceName.getPopularity(); //this function need to be completed in other field= serviceName.getPopularity(); //this function need to be completed in other field
+        //servicePopularity = serviceName.getPopularity(); //this function need to be completed in other field
 
         CCNServiceObject CCNService_Object = null;
         try {
@@ -85,28 +89,28 @@ public class CCNServiceManager{
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         _serviceTable.put(serviceName, CCNService_Object);
+
+        if (service_installed(serviceName)) {
+            Log.info("Start local ccn service: {0}", serviceName);
+            startLocalService(serviceName);
+        } else {
+            Log.info("Fetch service from CCN Network: {0}", serviceName);
+
+        }
     }
 
     public void startLocalService(String serviceName) {
         String default_path = "/home/fish/IdeaProjects/default_name/out/production/default_name.jar";
         Bundle bundleBase = _serviceController.installBundle("file:/home/fish/IdeaProjects/ServiceFramework/out/production/ServiceFramework.jar");
         Bundle bundle = _serviceController.installBundle(default_path.replaceAll("default_name", serviceName));
-
-        //_installedBundles.add(bundleBase);
-        //_installedBundles.add(bundle);
-
         _serviceController.executeServiceBySymbolicName(serviceName, null);
     }
 
     public void startCCNService(String serviceName, CCNInputStream serviceStream) {
         Bundle bundleBase = _serviceController.installBundle("file:/home/fish/IdeaProjects/ServiceFramework/out/production/ServiceFramework.jar");
         Bundle bundle = _serviceController.installBundle(serviceName, serviceStream);
-
-        //_installedBundles.add(bundleBase);
-        //_installedBundles.add(bundle);
-
         _serviceController.executeServiceBySymbolicName(serviceName, null);
     }
-
 }
