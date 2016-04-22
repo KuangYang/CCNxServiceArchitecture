@@ -3,6 +3,7 @@ package edu.bupt.sia.ccn.services;
 import edu.bupt.sia.osgi.OSGIContoller;
 import org.ccnx.ccn.config.ConfigurationException;
 import org.ccnx.ccn.impl.support.Log;
+import org.ccnx.ccn.io.CCNFileInputStream;
 import org.ccnx.ccn.io.CCNInputStream;
 import org.ccnx.ccn.protocol.MalformedContentNameStringException;
 import org.osgi.framework.Bundle;
@@ -106,7 +107,7 @@ public class CCNServiceManager{
         _serviceController.executeServiceBySymbolicName(serviceName, null);
     }
 
-    public void startCCNService(String serviceName, CCNInputStream serviceStream) {
+    public void startCCNService(String serviceName, CCNFileInputStream serviceStream) {
         Bundle bundleBase = _serviceController.installBundle("file:/home/fish/IdeaProjects/ServiceFramework/out/production/ServiceFramework.jar");
         Bundle bundle = _serviceController.installBundle(serviceName, serviceStream);
         _serviceController.executeServiceBySymbolicName(serviceName, null);
