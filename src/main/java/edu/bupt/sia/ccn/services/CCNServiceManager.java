@@ -18,7 +18,7 @@ import java.util.List;
 public class CCNServiceManager{
     CCNServiceTable<String, CCNServiceObject> _serviceTable = new CCNServiceTable<>(5);
     OSGIContoller _serviceController = new OSGIContoller();
-    List<Bundle> _installedBundles = new LinkedList<Bundle>();
+    //List<Bundle> _installedBundles = new LinkedList<Bundle>();
 
     public CCNServiceManager()
             throws MalformedContentNameStringException, ConfigurationException,
@@ -93,8 +93,8 @@ public class CCNServiceManager{
         Bundle bundleBase = _serviceController.installBundle("file:/home/fish/IdeaProjects/ServiceFramework/out/production/ServiceFramework.jar");
         Bundle bundle = _serviceController.installBundle(default_path.replaceAll("default_name", serviceName));
 
-        _installedBundles.add(bundleBase);
-        _installedBundles.add(bundle);
+        //_installedBundles.add(bundleBase);
+        //_installedBundles.add(bundle);
 
         _serviceController.executeServiceBySymbolicName(serviceName, null);
     }
@@ -103,8 +103,8 @@ public class CCNServiceManager{
         Bundle bundleBase = _serviceController.installBundle("file:/home/fish/IdeaProjects/ServiceFramework/out/production/ServiceFramework.jar");
         Bundle bundle = _serviceController.installBundle(serviceName, serviceStream);
 
-        _installedBundles.add(bundleBase);
-        _installedBundles.add(bundle);
+        //_installedBundles.add(bundleBase);
+        //_installedBundles.add(bundle);
 
         _serviceController.executeServiceBySymbolicName(serviceName, null);
     }
