@@ -3,14 +3,14 @@ version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 
-sourceCompatibility = 1.5
+sourceCompatibility = 1.7
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    compile files('/usr/local/lib/ccn')
+    compile files('/usr/local/lib/ccn.jar')
     compile 'org.eclipse.osgi:org.eclipse.osgi:3.7.1'
     compile 'org.bouncycastle:bcprov-jdk16:1.43'
     compile 'kxml2:kxml2:2.3.0'
