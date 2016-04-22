@@ -12,7 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by on 16-4-14.
+ * Created by yangkuang on 16-4-14.
  */
 
 public class CCNServiceManager{
