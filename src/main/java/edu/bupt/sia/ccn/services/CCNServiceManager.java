@@ -44,7 +44,7 @@ public class CCNServiceManager{
 
     public boolean service_installed(String serviceName) { //serviceName == bundleSymbolicName
         boolean default_result = false;
-        if (_serviceController.getBundleContext().getBundle(serviceName) != null) {
+        if (_serviceTable.get(serviceName) != null) {
             return true;
         }
         return default_result;
