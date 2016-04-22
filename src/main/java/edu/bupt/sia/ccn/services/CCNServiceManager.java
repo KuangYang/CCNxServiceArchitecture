@@ -62,6 +62,7 @@ public class CCNServiceManager{
     public void removeService(String serviceName) {
         _serviceController.removeServiceBySymbolicName(serviceName);
         _serviceTable.delete(serviceName);
+        Log.info("CCN service is removed!", serviceName);
     }
 
     public void fetchService(String serviceName) {
