@@ -18,6 +18,7 @@ import java.io.IOException;
  */
 public class CCNServiceHandler implements CCNInterestHandler {
     static String DEFAULT_URI = "ccnx:/";
+
     protected CCNHandle ccnHandle;
     protected ContentName _prefix;
     protected CCNServiceManager manager;
@@ -82,5 +83,9 @@ public class CCNServiceHandler implements CCNInterestHandler {
         } catch (ConfigurationException e) {
             e.printStackTrace();
         }
+    }
+
+    public CCNHandle getCCNHandle() {
+        return ccnHandle;
     }
 }
