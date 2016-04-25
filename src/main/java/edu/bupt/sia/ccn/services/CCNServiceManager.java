@@ -66,7 +66,7 @@ public class CCNServiceManager{
         Log.info("CCN service is removed!", serviceName);
     }
 
-    public void fetchService(String serviceName) {
+    public CCNFileInputStream fetchService(String serviceName) {
 
     }
 
@@ -96,7 +96,8 @@ public class CCNServiceManager{
             startLocalService(serviceName);
         } else {
             Log.info("Fetch service from CCN Network: {0}", serviceName);
-
+            CCNFileInputStream serviceStream = fetchService(serviceName);
+            startCCNService(serviceName, serviceStream);
         }
     }
 
