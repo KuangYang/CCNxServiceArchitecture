@@ -16,11 +16,20 @@ import java.lang.reflect.Method;
 public class OSGIContoller {
     private Framework framework;
     private BundleContext bundleContext;
-    final private String CCNServiceTag = "CCNService";
+    final static protected String CCNServiceTag = "CCNService";
 
     public OSGIContoller(){
         this.framework = OSGILauncher.getFramework();
         this.bundleContext = framework.getBundleContext();
+        //add initial bundles
+        try {
+            Bundle ccnbundle = bundleContext.installBundle("file:libs/ccn-bundle_1.0.0.jar");
+            ccnbundle.start();
+            Bundle ccniobundle = bundleContext.installBundle("file:libs/CCNIOService.jar");
+            ccniobundle.start();
+        } catch (BundleException e) {
+            e.printStackTrace();
+        }
     }
 
     public Bundle installBundle(String path){

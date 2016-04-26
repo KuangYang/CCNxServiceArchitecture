@@ -20,11 +20,11 @@ public class LauncherTest {
             //安装bundle
 //            installedBundles.add(osgiContoller.installBundle(
 //                "file:/home/fish/IdeaProjects/OSGILaunchTest/out/production/helloworldbundle.jar"));
-            Bundle bundle = osgiContoller.installBundle("file:/home/fish/IdeaProjects/ServiceFramework/out/production/ServiceFramework.jar");
+            //Bundle bundle = osgiContoller.installBundle("file:/home/fish/IdeaProjects/ServiceFramework/out/production/ServiceFramework.jar");
 
-            File bundlefile = new File("/home/fish/IdeaProjects/ccnservice-myfirstservice/out/production/ccnservice-myfirstservice.jar");
+            File bundlefile = new File("CCNIOService.jar");
             InputStream inputStream = new BufferedInputStream(new FileInputStream(bundlefile));
-            Bundle bundle2 = osgiContoller.installBundle("ccnservice-myfirstservice", inputStream);
+            Bundle bundle2 = osgiContoller.installBundle("CCNIOService", inputStream);
 
             Dictionary<String,String> dictionary = bundle2.getHeaders();
             Enumeration<String> keys = dictionary.keys();
@@ -32,7 +32,7 @@ public class LauncherTest {
                 String keyStr = keys.nextElement();
                 System.out.println(keyStr+" , "+dictionary.get(keyStr));
             }
-            installedBundles.add(bundle);
+            //installedBundles.add(bundle);
             installedBundles.add(bundle2);
 //            for (Bundle bundle : installedBundles) {
 //                bundle.start();
