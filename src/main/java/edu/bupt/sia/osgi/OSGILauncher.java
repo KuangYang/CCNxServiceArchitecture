@@ -22,12 +22,14 @@ public class OSGILauncher {
         ServiceLoader<FrameworkFactory> loader = ServiceLoader.load(FrameworkFactory.class);
         FrameworkFactory factory = loader.iterator().next();
         Map<String, String> configProps = new HashMap<String, String>();
-        // TODO: add some config properties
+//        configProps.put("org.osgi.framework.bundle.parent", "app");
+//        configProps.put("org.osgi.framework.bootdelegation", "javax.crypto.*,javax.crypto.interfaces.*");
+//        configProps.put("org.osgi.framework.executionenvironment", "JavaSE-1.8,JavaSE-1.7");
         configProps.put("org.osgi.framework.storage.clean", "onFirstInit");
         // And get a framework.
         framework = factory.newFramework(configProps);
         //初始化framework
-//        framework.init();
+        framework.init();
         framework.start();
         return framework;
     }

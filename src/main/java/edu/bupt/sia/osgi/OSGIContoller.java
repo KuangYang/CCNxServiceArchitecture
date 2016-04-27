@@ -23,6 +23,13 @@ public class OSGIContoller {
         this.bundleContext = framework.getBundleContext();
         //add initial bundles
         try {
+//            Bundle ccnbundle01 = bundleContext.installBundle("file:libs/org.apache.felix.gogo.runtime_0.10.0.v201209301036.jar");
+//            ccnbundle01.start();
+//            Bundle ccnbundle02 = bundleContext.installBundle("file:libs/org.apache.felix.gogo.shell_0.10.0.v201212101605.jar");
+//            ccnbundle02.start();
+//            Bundle ccnbundle03 = bundleContext.installBundle("file:libs/org.apache.felix.gogo.command_0.10.0.v201209301215.jar");
+//            ccnbundle03.start();
+
             Bundle ccnbundle = bundleContext.installBundle("file:libs/ccn-bundle_1.0.0.jar");
             ccnbundle.start();
             Bundle ccniobundle = bundleContext.installBundle("file:libs/CCNIOService.jar");
@@ -59,6 +66,7 @@ public class OSGIContoller {
     public void executeServiceByID(long bundleID, String[] args){
         Bundle b = bundleContext.getBundle(bundleID);
         String ServiceEntryName = b.getHeaders().get(CCNServiceTag);
+//        String ServiceEntryName = "";
         if(ServiceEntryName != null && ServiceEntryName.length() > 0) {
             ServiceReference sr = bundleContext.getServiceReference(ServiceEntryName);
             Object o = bundleContext.getService(sr);
@@ -82,6 +90,7 @@ public class OSGIContoller {
     public void executeServiceBySymbolicName(String bundleSymbolicName, String[] args){
         Bundle b = bundleContext.getBundle(bundleSymbolicName);
         String ServiceEntryName = b.getHeaders().get(CCNServiceTag);
+//        String ServiceEntryName = "";
         if(ServiceEntryName != null && ServiceEntryName.length() > 0) {
             ServiceReference sr = bundleContext.getServiceReference(ServiceEntryName);
             Object o = bundleContext.getService(sr);

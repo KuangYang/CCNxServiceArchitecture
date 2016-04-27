@@ -3,15 +3,21 @@ version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 
-sourceCompatibility = 1.7
+sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
 }
 
+jar {
+    manifest {
+        attributes 'Main-Class': 'edu.bupt.sia.ccn.CCNServiceHandler'
+    }
+}
+
 dependencies {
     compile files('/usr/local/lib/ccn.jar')
-    compile 'org.eclipse.osgi:org.eclipse.osgi:3.7.1'
+    compile files('libs/org.eclipse.osgi_3.10.102.v20160118-1700.jar')
     compile 'org.bouncycastle:bcprov-jdk16:1.43'
     compile 'kxml2:kxml2:2.3.0'
     testCompile group: 'junit', name: 'junit', version: '4.11'
