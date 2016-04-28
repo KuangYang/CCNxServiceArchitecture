@@ -14,6 +14,7 @@ import org.osgi.framework.Version;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -81,14 +82,13 @@ public class CCNServiceManager{
         return serviceStream;
     }
 
-    public void addService(String serviceName) throws IOException, MalformedContentNameStringException, ConfigurationException {
-        Bundle bundle = _serviceController.getBundleContext().getBundle(serviceName);
+    public void installService(String serviceName, String servicePath) {
+        Bundle bundle = _serviceController.installBundle(servicePath);
         long serviceID = bundle.getBundleId();
         Version serviceVersion = bundle.getVersion();
 
         String servicePopularity = "";
         //servicePopularity = serviceName.getPopularity(); //this function need to be completed in other field
-
         CCNServiceObject CCNService_Object = null;
         try {
             CCNService_Object = new CCNServiceObject(serviceID, serviceName, serviceVersion, servicePopularity);
@@ -99,29 +99,44 @@ public class CCNServiceManager{
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         _serviceTable.put(serviceName, CCNService_Object);
 
-        if (service_existed(serviceName)) {
-            Log.info("Start local ccn service: {0}", serviceName);
-            startLocalService(serviceName);
-        } else {
-            Log.info("Fetch service from CCN Network: {0}", serviceName);
-            CCNFileInputStream serviceStream = fetchService(serviceName);
-            startCCNService(serviceName, serviceStream);
+    }
+    public void installService(String serviceName) {
+        Bundle bundle = _serviceController.installBundleByCCNIOStream(serviceName);
+        long serviceID = bundle.getBundleId();
+        Version serviceVersion = bundle.getVersion();
+
+        String servicePopularity = "";
+        //servicePopularity = serviceName.getPopularity(); //this function need to be completed in other field
+        CCNServiceObject CCNService_Object = null;
+        try {
+            CCNService_Object = new CCNServiceObject(serviceID, serviceName, serviceVersion, servicePopularity);
+        } catch (MalformedContentNameStringException e) {
+            e.printStackTrace();
+        } catch (ConfigurationException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        _serviceTable.put(serviceName, CCNService_Object);
+
     }
 
     public void startLocalService(String serviceName) {
-        String default_path = "/home/fish/IdeaProjects/default_name/out/production/default_name.jar";
-        Bundle bundleBase = _serviceController.installBundle("file:/home/fish/IdeaProjects/ServiceFramework/out/production/ServiceFramework.jar");
-        Bundle bundle = _serviceController.installBundle(default_path.replaceAll("default_name", serviceName));
-        _serviceController.executeServiceBySymbolicName(serviceName, null);
+        if (service_existed(serviceName)) {
+            System.out.println("Service:"+serviceName+" is existed and executing..");
+            _serviceController.executeServiceBySymbolicName(serviceName, null);
+        }else {
+            System.out.println("Service:"+serviceName+" is not existed and installing..");
+            installService(serviceName);
+            startLocalService(serviceName);
+        }
     }
 
     public void startCCNService(String serviceName, CCNFileInputStream serviceStream) {
-        Bundle bundleBase = _serviceController.installBundle("file:/home/fish/IdeaProjects/ServiceFramework/out/production/ServiceFramework.jar");
-        Bundle bundle = _serviceController.installBundle(serviceName, serviceStream);
+//        Bundle bundleBase = _serviceController.installBundle("file:/home/fish/IdeaProjects/ServiceFramework/out/production/ServiceFramework.jar");
+//        Bundle bundle = _serviceController.installBundle(serviceName, serviceStream);
         _serviceController.executeServiceBySymbolicName(serviceName, null);
     }
 }

@@ -34,6 +34,8 @@ public class OSGIContoller {
             ccnbundle.start();
             Bundle ccniobundle = bundleContext.installBundle("file:libs/CCNIOService.jar");
             ccniobundle.start();
+            Bundle ccnservicebundle = bundleContext.installBundle("file:libs/CCNIOServiceInstall.jar");
+            ccnservicebundle.start();
         } catch (BundleException e) {
             e.printStackTrace();
         }
@@ -51,13 +53,32 @@ public class OSGIContoller {
         return bundle;
     }
 
-    public Bundle installBundle(String bundleName, InputStream inputStream){
+    public Bundle installBundleByCCNIOStream(String bundleName){
         Bundle bundle = null;
         try {
-            bundle = bundleContext.installBundle(bundleName, inputStream);
-            bundle.start();
+            ServiceReference sr = bundleContext.getServiceReference("com.fish.service.controller.CCNServiceInstall");
+            Object ccnServiceInstall = bundleContext.getService(sr);
+            if(ccnServiceInstall != null) {
+                long id = 0;
+                Method[] methods = ccnServiceInstall.getClass().getDeclaredMethods();
+                for (Method m: methods) {
+                    if (m.getName().equals("installService")){
+                        id = (long)m.invoke(ccnServiceInstall, bundleName);
+                    }
+                }
+                bundle = bundleContext.getBundle(id);
+                if (bundle != null){
+                    bundle.start();
+                }
+            }else {
+                System.err.println("get CCNServiceInstall error!");
+            }
         } catch (BundleException e) {
             System.out.println("installBundle by InputStream exception:"+bundleName);
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
         return bundle;

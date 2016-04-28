@@ -24,24 +24,24 @@ public class LauncherTest {
 
             File bundlefile = new File("CCNIOService.jar");
             InputStream inputStream = new BufferedInputStream(new FileInputStream(bundlefile));
-            Bundle bundle2 = osgiContoller.installBundle("CCNIOService", inputStream);
+            //Bundle bundle2 = osgiContoller.installBundle("CCNIOService", inputStream);
 
-            Dictionary<String,String> dictionary = bundle2.getHeaders();
-            Enumeration<String> keys = dictionary.keys();
-            while(keys.hasMoreElements()){
-                String keyStr = keys.nextElement();
-                System.out.println(keyStr+" , "+dictionary.get(keyStr));
-            }
+//            Dictionary<String,String> dictionary = bundle2.getHeaders();
+//            Enumeration<String> keys = dictionary.keys();
+//            while(keys.hasMoreElements()){
+//                String keyStr = keys.nextElement();
+//                System.out.println(keyStr+" , "+dictionary.get(keyStr));
+//            }
             //installedBundles.add(bundle);
-            installedBundles.add(bundle2);
+//            installedBundles.add(bundle2);
 //            for (Bundle bundle : installedBundles) {
 //                bundle.start();
 //            }
 //        } catch (BundleException e) {
 //            e.printStackTrace();
-            long id = bundle2.getBundleId();
-            System.out.println("installed bundle id:"+id);
-            osgiContoller.executeServiceByID(id, new String[]{"hello", "world"});
+//            long id = bundle2.getBundleId();
+//            System.out.println("installed bundle id:"+id);
+//            osgiContoller.executeServiceByID(id, new String[]{"hello", "world"});
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
