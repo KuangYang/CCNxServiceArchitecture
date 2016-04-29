@@ -124,8 +124,23 @@ public class CCNServiceManager{
             _serviceController.executeServiceBySymbolicName(serviceName, null);
         }else {
             System.out.println("Service:"+serviceName+" is not existed and installing..");
-            installService(serviceName);
-            startLocalService(serviceName);
+            if (serviceTable_withinSize()) {
+                System.out.println("CCNServiceTable is within the max size...Service:"+serviceName+" is installing..");
+                installService(serviceName);
+                startLocalService(serviceName);
+            } else {
+                System.out.println("CCNServiceTable is outside the max size...Check whether Service:"+serviceName+" can be installed..");
+                if (_servicePopularity.get_CCNServicePopularity().get(serviceName) == 2) {
+                    System.out.println("Meet the requirement to replace one old service in CCNServiceTable...Service:"+serviceName+" is installing..");
+
+                    removeService(serviceName);
+
+                    installService(serviceName);
+                    startLocalService(serviceName);
+                } else {
+                    System.out.println("Do not meet the requirement to replace one old service in CCNServiceTable...Service:"+serviceName+" is dropped..");
+                }
+            }
         }
     }
 
