@@ -47,20 +47,20 @@ public class CCNServicePopularity {
             map.put(letter, count);
         }
 
-        Set<PopularityTable> set = new TreeSet<PopularityTable>();
+        Set<CountTable> set = new TreeSet<CountTable>();
         for (String key : map.keySet()) {
-            set.add(new PopularityTable(key, map.get(key)));
+            set.add(new CountTable(key, map.get(key)));
         }
 
         int sum = 0;
-        for (Iterator<PopularityTable> it = set.iterator(); it.hasNext(); ) {
-            PopularityTable w = it.next();
+        for (Iterator<CountTable> it = set.iterator(); it.hasNext(); ) {
+            CountTable w = it.next();
             sum = sum + w.getCount();
         }
 
         //int count = 1;
-        for (Iterator<PopularityTable> it = set.iterator(); it.hasNext(); ) {
-            PopularityTable w = it.next();
+        for (Iterator<CountTable> it = set.iterator(); it.hasNext(); ) {
+            CountTable w = it.next();
             double frequency = (double)w.getCount()/sum;
             int popularity = 0;
             if (frequency >0 && frequency <0.5) {

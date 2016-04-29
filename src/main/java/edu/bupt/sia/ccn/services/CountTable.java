@@ -3,14 +3,14 @@ package edu.bupt.sia.ccn.services;
 /**
  * Created by yangkuang on 16-4-29.
  */
-public class PopularityTable implements Comparable<PopularityTable>{
+public class CountTable implements Comparable<CountTable>{
     private String key;
     private Integer count;
-    public PopularityTable (String key, Integer count) {
+    public CountTable (String key, Integer count) {
         this.key = key;
         this.count = count;
     }
-    public int compareTo(PopularityTable o) {
+    public int compareTo(CountTable o) {
         int cmp = count.intValue() - o.count.intValue();
         return (cmp == 0 ? key.compareTo(o.key) : -cmp);
         //-cmp降序排列 cmp升序排列
