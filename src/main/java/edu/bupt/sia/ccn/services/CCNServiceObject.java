@@ -14,9 +14,9 @@ public class CCNServiceObject {
     long _serviceID;
     String _serviceName;
     Version _serviceVersion;
-    String _servicePopularity;
+    int _servicePopularity;
 
-    public CCNServiceObject(long serviceID, String serviceName, Version serviceVersion, String servicePopularity)
+    public CCNServiceObject(long serviceID, String serviceName, Version serviceVersion, int servicePopularity)
             throws MalformedContentNameStringException, ConfigurationException,
             IOException {
         _serviceID = serviceID;
@@ -26,18 +26,22 @@ public class CCNServiceObject {
     }
 
     public long serviceID() {
+
         return _serviceID;
     }
 
     public String serviceName() {
+
         return _serviceName;
     }
 
     public Version serviceVersion() {
+
         return _serviceVersion;
     }
 
-    public String servicePopularity() {
+    public int servicePopularity() {
+
         return _servicePopularity;
     }
 }

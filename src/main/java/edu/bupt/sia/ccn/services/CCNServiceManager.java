@@ -25,6 +25,7 @@ import java.util.List;
 public class CCNServiceManager{
     CCNServiceTable<String, CCNServiceObject> _serviceTable = new CCNServiceTable<>(5);
     OSGIContoller _serviceController = new OSGIContoller();
+    CCNServicePopularity _servicePopularity = new CCNServicePopularity();
 
     public CCNServiceManager()
             throws MalformedContentNameStringException, ConfigurationException,
@@ -47,14 +48,6 @@ public class CCNServiceManager{
         }
         return compare_result;
     }
-
-    //public boolean service_installed(String serviceName) { //serviceName == bundleSymbolicName
-    //    boolean default_result = false;
-    //    if (_serviceTable.get(serviceName) != null) {
-    //        return true;
-    //    }
-    //    return default_result;
-    //}
 
     public boolean serviceTable_withinSize() {
         boolean default_result = false;
@@ -87,8 +80,9 @@ public class CCNServiceManager{
         long serviceID = bundle.getBundleId();
         Version serviceVersion = bundle.getVersion();
 
-        String servicePopularity = "";
-        //servicePopularity = serviceName.getPopularity(); //this function need to be completed in other field
+        int servicePopularity = 0;
+        servicePopularity = _servicePopularity.get_CCNServicePopularity().get(serviceName);
+
         CCNServiceObject CCNService_Object = null;
         try {
             CCNService_Object = new CCNServiceObject(serviceID, serviceName, serviceVersion, servicePopularity);
@@ -107,8 +101,9 @@ public class CCNServiceManager{
         long serviceID = bundle.getBundleId();
         Version serviceVersion = bundle.getVersion();
 
-        String servicePopularity = "";
-        //servicePopularity = serviceName.getPopularity(); //this function need to be completed in other field
+        int servicePopularity = 0;
+        servicePopularity = _servicePopularity.get_CCNServicePopularity().get(serviceName);
+
         CCNServiceObject CCNService_Object = null;
         try {
             CCNService_Object = new CCNServiceObject(serviceID, serviceName, serviceVersion, servicePopularity);
