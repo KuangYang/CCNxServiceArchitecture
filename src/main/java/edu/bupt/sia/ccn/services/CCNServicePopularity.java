@@ -14,7 +14,7 @@ public class CCNServicePopularity {
 
     public CCNServicePopularity() {
 
-        readFile("/var/tmp/ccnd.log");
+        readFile("/var/tmp/ccnd.log"); //where the ccnd.log exists
     }
 
 
@@ -69,7 +69,7 @@ public class CCNServicePopularity {
             if (frequency >0.5 && frequency <1) {
                 popularity = 2;
             }
-            _CCNServicePopularity.put(w.getKey(), popularity);
+            _CCNServicePopularity.put(w.getKey(), popularity); //CCNServicePopularity Table it is what we need
             //String servicePopularity = String.format("%.2f", frequency);
             System.out.println(w.getKey() + " popularity： "
                     + _CCNServicePopularity.get(w.getKey()));
@@ -98,7 +98,7 @@ public class CCNServicePopularity {
 
                     popularityCount(output);
 
-                    File file2 = new File("/home/yangkuang/result.txt"); //after regex
+                    File file2 = new File("/home/yangkuang/result.txt"); //result.txt after regex
                     try {
                         FileWriter fileWriter = new FileWriter(file2);
                         fileWriter.write(output);
