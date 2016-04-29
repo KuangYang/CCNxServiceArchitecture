@@ -13,7 +13,6 @@ public class CCNServicePopularity {
     Hashtable<String, Integer> _CCNServicePopularity = new Hashtable<>();
 
     public CCNServicePopularity() {
-
         readFile("/var/tmp/ccnd.log"); //where the ccnd.log exists
     }
 
@@ -66,7 +65,7 @@ public class CCNServicePopularity {
             if (frequency >0 && frequency <0.5) {
                 popularity = 1;
             }
-            if (frequency >0.5 && frequency <1) {
+            if (frequency >=0.5 && frequency <1) {
                 popularity = 2;
             }
             _CCNServicePopularity.put(w.getKey(), popularity); //CCNServicePopularity Table it is what we need
@@ -125,7 +124,6 @@ public class CCNServicePopularity {
     }
 
     public Hashtable<String, Integer> get_CCNServicePopularity() {
-
         return _CCNServicePopularity;
     }
 

@@ -13,10 +13,10 @@ import java.io.IOException;
 public class CCNServiceObject {
     long _serviceID;
     String _serviceName;
-    Version _serviceVersion;
+    String _serviceVersion;
     int _servicePopularity;
 
-    public CCNServiceObject(long serviceID, String serviceName, Version serviceVersion, int servicePopularity)
+    public CCNServiceObject(long serviceID, String serviceName, String serviceVersion, int servicePopularity)
             throws MalformedContentNameStringException, ConfigurationException,
             IOException {
         _serviceID = serviceID;
@@ -35,7 +35,7 @@ public class CCNServiceObject {
         return _serviceName;
     }
 
-    public Version serviceVersion() {
+    public String serviceVersion() {
 
         return _serviceVersion;
     }

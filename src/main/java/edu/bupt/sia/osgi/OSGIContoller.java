@@ -137,6 +137,7 @@ public class OSGIContoller {
     public void removeServiceByID(long bundleID){
         Bundle b = bundleContext.getBundle(bundleID);
         try {
+            b.stop();//
             b.uninstall();
         } catch (BundleException e) {
             e.printStackTrace();

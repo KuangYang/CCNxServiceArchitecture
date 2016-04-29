@@ -49,7 +49,7 @@ public class CCNServiceHandler implements CCNInterestHandler {
         if(serviceNameObject != null) {
             if (serviceNameObject.getServiceName() != null
                     && serviceNameObject.getServiceName().length() > 0) {
-                manager.startLocalService(serviceNameObject.getServiceName());
+                manager.startLocalService(serviceNameObject.getServiceName(), serviceNameObject.getVersion());
             } else {
                 Log.warning("Service Name parse error!", serviceNameObject);
             }
